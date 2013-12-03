@@ -1,5 +1,3 @@
-CC ?= gcc
-CXX ?= g++
 CXXFLAGS = -std=c++11 -Wall -O2
 LIBS ?= -lboost_system
 OS ?= $(shell uname -s)
@@ -25,10 +23,10 @@ endif
 all:tcp_sync_client.run tcp_sync_server.run
 
 tcp_sync_client.run:tcp_sync_client.o
-	$(CXX) $(LIBS) -o $@ $<
+	$(CXX) -o $@ $< $(LIBS) 
 
 tcp_sync_server.run:tcp_sync_server.o
-	$(CXX) $(LIBS) -o $@ $<
+	$(CXX) -o $@ $< $(LIBS)
 
 clean:
 	rm -rf *.o *.run
