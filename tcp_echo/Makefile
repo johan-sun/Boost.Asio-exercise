@@ -2,6 +2,8 @@ CXXFLAGS = -std=c++11 -Wall -O2
 LIBS ?= -lboost_system
 OS ?= $(shell uname -s)
 ARCH ?= $(shell uname -m)
+SOURCES = $(wildcard *.cpp)
+TARGEST = $(patsubst %.cpp, %.run, $(SOURCES))
 ifeq ($(OS), Linux)
 	LIBS += -lboost_thread
 endif
@@ -20,13 +22,16 @@ endif
 
 .PHONY:clean all
 
-all:tcp_sync_client.run tcp_sync_server.run
+all:$(TARGEST)
 
-tcp_sync_client.run:tcp_sync_client.o
-	$(CXX) -o $@ $< $(LIBS) 
-
-tcp_sync_server.run:tcp_sync_server.o
+%.run:%.o
 	$(CXX) -o $@ $< $(LIBS)
+#tcp_sync_client.run:tcp_sync_client.o
+#	$(CXX) -o $@ $< $(LIBS) 
+#
+#tcp_sync_server.run:tcp_sync_server.o
+#	$(CXX) -o $@ $< $(LIBS)
+
 
 clean:
-	rm -rf *.o *.run
+	rm -rf *.o $(TARGEST)
