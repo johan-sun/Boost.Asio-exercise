@@ -103,7 +103,7 @@ private:
 	{
 		if(!err)
 		{
-			std::string str(_read_buf, _read_buf + bytes);
+			std::string str(_read_buf, _read_buf + bytes - 1);
 			Log("recive from server:%s") % str;
 		}	
 		else
